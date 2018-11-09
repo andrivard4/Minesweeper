@@ -32,7 +32,7 @@ protected:
     void _setValueBoardAt(int x, int y, int val);
     int _getValueBoardAt(int x, int y);
     void _setShownBoardAt(int x, int y, bool val);
-    bool _getShownBoardAt(int x, int y);
+    int _getShownBoardAt(int x, int y);
     bool _canSelect(int x, int y);
     void _revealSpace(int x, int y);
     void _toggleSpace(int x, int y);
@@ -45,7 +45,7 @@ private:
     //  The completed board
     vector<vector<int>> _val_board;
     //  What blocks are shown to the user
-    vector<vector<bool>> _shown_board;
+    vector<vector<int>> _shown_board;
 };
 
 #endif /* board_hpp */

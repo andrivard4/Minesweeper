@@ -21,9 +21,9 @@ board::board(int height, int width){
     for(int i=0; i<_height; i++) {
         // Declares 2 vectors to be rows of board / fill them
         vector<int> vect;
-        vector<bool> shown;
+        vector<int> shown;
         for(int j=0; j<_width; j++) {
-            shown.push_back(false);
+            shown.push_back(0);
             vect.push_back(0);
         }
         // Add each row to board
@@ -194,7 +194,7 @@ void board::_setShownBoardAt(int x, int y, bool val) {
  * @param y the vertical coord
  * @return the value at the location
  **/
-bool board::_getShownBoardAt(int x, int y) {
+int board::_getShownBoardAt(int x, int y) {
     return _shown_board.at(y).at(x);
 }
 
