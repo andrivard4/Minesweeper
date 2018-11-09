@@ -13,9 +13,7 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    minesweeper play(20, 10, 10);
-    play.pushPrintList(0, '-');
-    play.pushPrintList(-1, '*');
+    minesweeper play(30, 10, 20);
     play.print_hidden_board();
     cout << endl;
     cout << play;

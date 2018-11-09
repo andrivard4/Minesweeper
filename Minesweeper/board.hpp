@@ -24,10 +24,7 @@ public:
     void    select_item();
     int     getHeight();
     int     getWidth();
-    bool    pushPrintList(int original, char result);
-    bool    popPrintList(int original);
-    void    clearPrintList();
-    void    setPrintList(map<int, char>);
+
 protected:
     void    _setValueBoardAt(int x, int y, int val);
     int     _getValueBoardAt(int x, int y);
@@ -37,6 +34,9 @@ protected:
     void    _revealSpace(int x, int y);
     void    _toggleSpace(int x, int y);
     bool    _canSee(int x, int y);
+    bool    _pushPrintList(int original, char result);
+    bool    _popPrintList(int original);
+    void    _clearPrintList();
     bool    _pushPrintActionList(int original, char(*func)());
     bool    _popPrintActionList(int original);
     void    _clearPrintActionList();

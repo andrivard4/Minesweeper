@@ -207,7 +207,7 @@ int board::_getShownBoardAt(int x, int y) {
  * @param result the character to replace the number with
  * @return false if the item was not added to the map
  **/
-bool board::pushPrintList(int original, char result) {
+bool board::_pushPrintList(int original, char result) {
     if (!_replace.count(original)) {
         _replace.emplace(original, result);
         return true;
@@ -220,7 +220,7 @@ bool board::pushPrintList(int original, char result) {
  * @param original the original number being replaced
  * @return false if failed to remove or entry does not exist
  **/
-bool board::popPrintList(int original) {
+bool board::_popPrintList(int original) {
     if (_replace.count(original)) {
         _replace.erase(original);
         return true;
@@ -231,16 +231,8 @@ bool board::popPrintList(int original) {
 /**
  * Clears the entire map of replacement values.
  **/
-void board::clearPrintList() {
+void board::_clearPrintList() {
     _replace.clear();
-}
-
-/**
- * Replaces the current map of replacemnt values with the on passed
- * @param new_replace the new map of values
- **/
-void board::setPrintList(map<int, char> new_replace){
-    _replace = new_replace;
 }
 
 /**
