@@ -53,13 +53,16 @@ const void board::print_hidden_board() {
 const void board::print_shown_board() {
     for(int i=0; i<_height; i++) {
         for(int j=0; j<_width; j++) {
-            if (_shown_board.at(i).at(j)) {
+            if (_shown_action.count(_shown_board.at(i).at(j)))
+                cout << (_shown_action.at(_shown_board.at(i).at(j)))() << "\t";
+            else if (_shown_board.at(i).at(j) == 1) {
                 if (_replace.count(_getValueBoardAt(j, i)))
                     cout << _replace.at(_getValueBoardAt(j, i));
                 else
                     cout << _val_board.at(i).at(j);
                 cout << "\t";
-            } else
+            }
+            else
                 cout << "█\t";
         }
         cout << endl;
@@ -184,7 +187,7 @@ int board::_getValueBoardAt(int x, int y) {
  * @param y the vertical coord
  * @param val the value to set
  **/
-void board::_setShownBoardAt(int x, int y, bool val) {
+void board::_setShownBoardAt(int x, int y, int val) {
     _shown_board.at(y).at(x) = val;
 }
 
@@ -238,4 +241,39 @@ void board::clearPrintList() {
  **/
 void board::setPrintList(map<int, char> new_replace){
     _replace = new_replace;
+}
+
+/**
+ * When shown is being printed call a function if a specified value is encountered.
+ * @param original the value in the shown board
+ * @param func a function that returns a character that will be printed
+ * @return false if the action wasnt added to the map
+ **/
+bool board::_pushPrintActionList(int original, char(*func)()) {
+    if (!_shown_action.count(original)) {
+        _shown_action.emplace(original, func);
+        return true;
+    }
+    return false;
+
+}
+
+/**
+ * Removes item from the map of actions
+ * @param original the key to remove
+ * @return false if failure to remove
+ **/
+bool board::_popPrintActionList(int original) {
+    if (_shown_action.count(original)) {
+        _shown_action.erase(original);
+        return true;
+    }
+    return false;
+}
+
+/**
+ * Clears the current map of actions
+ **/
+void board::_clearPrintActionList() {
+    _shown_action.clear();
 }

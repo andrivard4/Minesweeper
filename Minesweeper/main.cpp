@@ -21,5 +21,7 @@ int main(int argc, const char * argv[]) {
     cout << play;
     play.select_item();
     cout << play;
+    play.toggle_flag();
+    cout << play;
     return 0;
 }

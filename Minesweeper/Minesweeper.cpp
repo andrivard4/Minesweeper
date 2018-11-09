@@ -8,6 +8,7 @@
 
 #include "Minesweeper.hpp"
 minesweeper::minesweeper(int height, int width, int bomb_frequency):board(height, width){
+    _pushPrintActionList(2, _flag_print);
     srandom(static_cast<int>(time(NULL)));
     //srandom(0);
     _bombsLeft = 0;
@@ -66,6 +67,11 @@ void minesweeper::select_item() {
     _revealSpace(coord.first, coord.second);
 }
 
+void minesweeper::toggle_flag() {
+    pair<int, int> coord = _getInput();
+    _setShownBoardAt(coord.first, coord.second, 2);
+}
+
 /**
  * Reveals a space to the user. If the space is 0 then it revieals surrounding spaces too.
  * @param x the vertical index
@@ -110,4 +116,8 @@ bool minesweeper::_isBomb(int x, int y) {
  **/
 bool minesweeper::_canSelect(int x, int y) {
     return board::_canSelect(x, y);
+}
+
+char minesweeper::_flag_print() {
+    return 'F';
 }

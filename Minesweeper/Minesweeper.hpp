@@ -15,15 +15,17 @@ using namespace std;
 class minesweeper: public board {
 public:
     minesweeper(int height=10, int width=10, int bomb_frequency=10);
-    void select_item();
-    int getBombsLeft();
+    void    select_item();
+    int     getBombsLeft();
+    void    toggle_flag();
 protected:
-    void _setNumber();
-    void _revealSpace(int x, int y);
-    bool _isBomb(int x, int y);
-    bool _canSelect(int x, int y);
+    void    _setNumber();
+    void    _revealSpace(int x, int y);
+    bool    _isBomb(int x, int y);
+    bool    _canSelect(int x, int y);
 private:
-    int _bombsLeft;
+    static char _flag_print();
+    int     _bombsLeft;
 };
 
 #endif /* Minesweeper_hpp */
