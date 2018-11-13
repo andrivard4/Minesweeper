@@ -8,6 +8,8 @@
 
 #include "Minesweeper.hpp"
 minesweeper::minesweeper(int height, int width, int bomb_frequency):board(height, width){
+    _pushPrintList(0, '-');
+    _pushPrintList(-1, '*');
     _pushPrintActionList(2, _flag_print);
     srandom(static_cast<int>(time(NULL)));
     //srandom(0);
@@ -55,8 +57,20 @@ void minesweeper::_setNumber() {
     }
 }
 
+/**
+ *  Gets the number of bombs on the board
+ *  @return int bombs
+ **/
 int minesweeper::getBombsLeft() {
     return _bombsLeft;
+}
+
+/**
+ *  Gets the number of spaces flagged
+ *  @return int spaces flagged
+ **/
+int minesweeper::getFlaggedSpaces() {
+    return _flaggedSpaces;
 }
 
 /**
@@ -67,9 +81,21 @@ void minesweeper::select_item() {
     _revealSpace(coord.first, coord.second);
 }
 
+/**
+ * Takes a user input and flags the item as a bomb.
+ **/
 void minesweeper::toggle_flag() {
     pair<int, int> coord = _getInput();
-    _setShownBoardAt(coord.first, coord.second, 2);
+    if (_getShownBoardAt(coord.first, coord.second) == 0) {
+    board::_toggleSpace(coord.first, coord.second, 2);
+        _flaggedSpaces++;
+    }
+    else if (_getShownBoardAt(coord.first, coord.second) == 2) {
+        board::_toggleSpace(coord.first, coord.second);
+        _flaggedSpaces--;
+    }
+    else
+        cout << "That space can\'t be selected!" << endl;
 }
 
 /**
@@ -79,14 +105,14 @@ void minesweeper::toggle_flag() {
  */
 void minesweeper::_revealSpace(int x, int y) {
     if (!_canSelect(x, y)) return;
-    if (_isBomb(x, y)) return;
+    if (_isBomb(x, y))  return;
     if (_canSee(x, y)) return;
     if (_getValueBoardAt(x, y) != 0) {
-        _setShownBoardAt(x, y, true);
+        board::_revealSpace(x, y);
         return;
     }
     else if (_getValueBoardAt(x, y) == 0) {
-        _setShownBoardAt(x, y, true);
+        board::_revealSpace(x, y);
         _revealSpace(x-1, y-1);
         _revealSpace(x, y-1);
         _revealSpace(x+1, y-1);

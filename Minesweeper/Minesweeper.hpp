@@ -18,6 +18,7 @@ public:
     void    select_item();
     int     getBombsLeft();
     void    toggle_flag();
+    int     getFlaggedSpaces();
 protected:
     void    _setNumber();
     void    _revealSpace(int x, int y);
@@ -26,6 +27,7 @@ protected:
 private:
     static char _flag_print();
     int     _bombsLeft;
+    int     _flaggedSpaces;
 };
 
 #endif /* Minesweeper_hpp */

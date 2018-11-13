@@ -17,6 +17,7 @@ board::board(int height, int width){
     // Sets default size of board
     _height = height;
     _width = width;
+    _numb_shown = 0;
     // Places the bombs on the board
     for(int i=0; i<_height; i++) {
         // Declares 2 vectors to be rows of board / fill them
@@ -67,6 +68,7 @@ const void board::print_shown_board() {
         }
         cout << endl;
     }
+    cout << _numb_shown << endl;
 }
 
 /**
@@ -83,6 +85,14 @@ int board::getWidth() {
  **/
 int board::getHeight() {
     return _height;
+}
+
+/**
+ *  Gets the number of spaces shown to the user
+ *  @return int spaces shown
+ **/
+int board::_getNumbShown() {
+    return _numb_shown;
 }
 
 /**
@@ -121,20 +131,29 @@ bool board::_canSelect(int x, int y) {
  * @param x the vertical index
  * @param y the horizontal index
  */
-void board::_revealSpace(int x, int y) {
+void board::_revealSpace(int x, int y, int val) {
     if (!_canSelect(x, y)) return;
     if (_canSee(x, y)) return;
-    _shown_board.at(y).at(x) = true;
+    if (val==0) return;
+    _shown_board.at(y).at(x) = val;
+    _numb_shown++;
 }
 
 /**
  * Toggles the visibility of a space.
  * @param x the vertical index
  * @param y the horizontal index
+ * @param val the value to set _shown_board to if it is toggled on (default to 1)
  */
-void board::_toggleSpace(int x, int y) {
+void board::_toggleSpace(int x, int y, int val) {
     if (!_canSelect(x, y)) return;
-    _shown_board.at(y).at(x) = !_shown_board.at(y).at(x);
+    if (_shown_board.at(y).at(x)) {
+        _shown_board.at(y).at(x) = false;
+        _numb_shown--;
+    } else {
+        _shown_board.at(y).at(x) = val;
+        _numb_shown ++;
+    }
 }
 
 /**
@@ -186,10 +205,11 @@ int board::_getValueBoardAt(int x, int y) {
  * @param x the horizontal coord
  * @param y the vertical coord
  * @param val the value to set
+ * Note: Removed so that board class handles all changing of the _shown_board and _numb_shown is accurate
  **/
-void board::_setShownBoardAt(int x, int y, int val) {
-    _shown_board.at(y).at(x) = val;
-}
+//void board::_setShownBoardAt(int x, int y, int val) {
+//    _shown_board.at(y).at(x) = val;
+//}
 
 /**
  * Gets the value in _shown_board at a location.

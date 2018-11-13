@@ -28,11 +28,11 @@ public:
 protected:
     void    _setValueBoardAt(int x, int y, int val);
     int     _getValueBoardAt(int x, int y);
-    void    _setShownBoardAt(int x, int y, int val);
+//    void    _setShownBoardAt(int x, int y, int val);
     int     _getShownBoardAt(int x, int y);
     bool    _canSelect(int x, int y);
-    void    _revealSpace(int x, int y);
-    void    _toggleSpace(int x, int y);
+    void    _revealSpace(int x, int y, int val=1);
+    void    _toggleSpace(int x, int y, int val=1);
     bool    _canSee(int x, int y);
     bool    _pushPrintList(int original, char result);
     bool    _popPrintList(int original);
@@ -40,10 +40,12 @@ protected:
     bool    _pushPrintActionList(int original, char(*func)());
     bool    _popPrintActionList(int original);
     void    _clearPrintActionList();
+    int     _getNumbShown();
     pair<int, int> _getInput();
 private:
     int     _height;
     int     _width;
+    int     _numb_shown;
     // When outputing shown data call func when data in data = key.
     map<int, char(*)()> _shown_action;
     // Replaces key with value when printing from _val_board

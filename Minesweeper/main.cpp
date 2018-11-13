@@ -13,7 +13,7 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    minesweeper play(30, 10, 20);
+    minesweeper play;
     play.print_hidden_board();
     cout << endl;
     cout << play;
