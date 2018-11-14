@@ -76,9 +76,20 @@ int minesweeper::getFlaggedSpaces() {
 /**
  * Takes a user input and selects the item.
  **/
-void minesweeper::select_item() {
+bool minesweeper::select_item() {
     pair<int, int> coord = _getInput();
+    if (_isBomb(coord.first, coord.second)) {
+        // Lost Game State
+        cout << "You Lost!" << endl;
+        return true;
+    }
     _revealSpace(coord.first, coord.second);
+    if(_getNumbShown() == getWidth() * getHeight() - _bombsLeft) {
+        // Game Won State
+        cout << "You Won!" << endl;
+        return true;
+    }
+    return false;
 }
 
 /**
@@ -105,8 +116,9 @@ void minesweeper::toggle_flag() {
  */
 void minesweeper::_revealSpace(int x, int y) {
     if (!_canSelect(x, y)) return;
-    if (_isBomb(x, y))  return;
     if (_canSee(x, y)) return;
+    if (_isFlagged(x, y)) return;
+    if (_isBomb(x, y))  return;
     if (_getValueBoardAt(x, y) != 0) {
         board::_revealSpace(x, y);
         return;
@@ -135,6 +147,16 @@ bool minesweeper::_isBomb(int x, int y) {
 }
 
 /**
+ *  Checks if the selected space is flagged or not
+ *  @param x the vertival index
+ *  @param y the horizontal index
+ *  @return false if a the space does not hold a 2 shown_value
+ **/
+bool minesweeper::_isFlagged(int x, int y) {
+    return _getShownBoardAt(x, y) == 2;
+}
+
+/**
  *  Checks if a selected space exists or not
  *  @param x the vertival index
  *  @param y the horizontal index
@@ -142,6 +164,14 @@ bool minesweeper::_isBomb(int x, int y) {
  **/
 bool minesweeper::_canSelect(int x, int y) {
     return board::_canSelect(x, y);
+}
+
+/**
+ * Checks if the user can or cannot see a space
+ * @return false if hidden to the user
+ **/
+bool minesweeper::_canSee(int x, int y) {
+    return _getShownBoardAt(x, y) == 1;
 }
 
 char minesweeper::_flag_print() {

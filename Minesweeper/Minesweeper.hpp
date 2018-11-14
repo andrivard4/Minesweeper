@@ -15,7 +15,7 @@ using namespace std;
 class minesweeper: public board {
 public:
     minesweeper(int height=10, int width=10, int bomb_frequency=10);
-    void    select_item();
+    bool    select_item();
     int     getBombsLeft();
     void    toggle_flag();
     int     getFlaggedSpaces();
@@ -24,6 +24,8 @@ protected:
     void    _revealSpace(int x, int y);
     bool    _isBomb(int x, int y);
     bool    _canSelect(int x, int y);
+    bool    _canSee(int x, int y);
+    bool    _isFlagged(int x, int y);
 private:
     static char _flag_print();
     int     _bombsLeft;
