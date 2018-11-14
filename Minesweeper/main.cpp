@@ -13,13 +13,11 @@
 using namespace std;
 
 int main(int argc, const char * argv[]) {
-    minesweeper play;
+    minesweeper play(20, 10, 15);
+    do {
+        cout << endl;
+        cout << play;
+    } while (!play.select_item());
     play.print_hidden_board();
-    cout << endl;
-    cout << play;
-    play.select_item();
-    cout << play;
-    play.toggle_flag();
-    cout << play;
     return 0;
 }
